@@ -54,8 +54,8 @@
 
 ### Error Handling
 
-- ❌ 404 Not Found page
-- ❌ Redirect to Home button
+- ✅ 404 Not Found page
+- ✅ Redirect to Home button
 
 ### Optional Features
 
