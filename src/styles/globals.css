@@ -103,3 +103,27 @@
   --depth: 1;
   --noise: 0;
 }
+
+@layer utilities {
+  @keyframes float-pulse-horizontal {
+    0%,
+    100% {
+      transform: translateX(0);
+      opacity: 0.5;
+    }
+    25% {
+      transform: translateX(8px);
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      transform: translateX(-8px);
+    }
+  }
+
+  .animate-float-glow {
+    animation: float-pulse-horizontal 3s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+}
