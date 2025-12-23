@@ -6,8 +6,8 @@
 
 - ✅ Initialize project (Next.js / React)
 - ✅ Setup Tailwind CSS
-- ❌ Configure environment variables
-- ❌ Setup MongoDB connection
+- ✅ Configure environment variables
+- ✅ Setup MongoDB connection
 
 ### Authentication
 
