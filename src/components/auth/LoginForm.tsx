@@ -3,32 +3,21 @@
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 
-import { createUser } from "@/lib/actions";
 import FormField from "@/components/shared/FormField";
 
-export interface RegisterInput {
-  name: string;
+export interface LoginInput {
   email: string;
   password: string;
-  image: FileList;
 }
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterInput>();
+  } = useForm<LoginInput>();
 
-  const onSubmit = async (data: RegisterInput) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    if (data.image?.[0]) formData.append("image", data.image[0]);
-
-    await createUser(formData);
-
+  const onSubmit = async (data: LoginInput) => {
     const { email, password } = data;
     await signIn("credentials", {
       email,
@@ -43,14 +32,7 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="card card-body bg-base-200 w-full space-y-2"
     >
-      <h2 className="text-2xl font-bold tracking-tight">Create Account</h2>
-
-      <FormField
-        label="Full Name"
-        placeholder="Jane Doe"
-        registration={register("name", { required: "Name is required" })}
-        error={errors.name}
-      />
+      <h2 className="text-2xl font-bold tracking-tight">Welcome Back!</h2>
 
       <FormField
         label="Email"
@@ -73,24 +55,13 @@ export default function RegisterForm() {
         error={errors.password}
       />
 
-      <FormField
-        label="Profile Image"
-        type="file"
-        className="px-0 file-input w-full"
-        accept="image/*"
-        registration={register("image", {
-          required: "Image is required",
-        })}
-        error={errors.image}
-      />
-
       <button
         disabled={isSubmitting}
         className={`btn btn-primary w-full ${
           isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
         }`}
       >
-        {isSubmitting ? "Registering" : " Register"}
+        {isSubmitting ? "Logging in" : "Login"}
       </button>
     </form>
   );

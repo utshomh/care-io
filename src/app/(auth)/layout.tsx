@@ -1,3 +1,4 @@
+import AuthError from "@/components/auth/AuthError";
 import Page from "@/components/layout/Page";
 
 export default function AuthLayout({
@@ -8,6 +9,8 @@ export default function AuthLayout({
   return (
     <Page centered className="w-full max-w-lg mx-auto space-y-4">
       <div className="space-y-2">
+        <AuthError />
+
         <div className="badge badge-primary badge-outline font-semibold">
           Trusted by 5,000+ Families
         </div>
