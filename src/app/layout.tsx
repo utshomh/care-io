@@ -25,7 +25,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en">
         <body
-          className={`${anek.variable} antialiased min-h-screen w-full max-w-7xl p-2 xl:p-0 mx-auto flex flex-col justify-between gap-6`}
+          className={`${anek.variable} antialiased min-h-screen w-full max-w-7xl xl:p-0 mx-auto flex flex-col justify-between gap-6`}
         >
           <Header />
           {children}

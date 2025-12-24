@@ -10,7 +10,7 @@ export default function Page({
   children,
 }: Props) {
   return (
-    <main className={`${centered ? "flex-0" : "flex-1"} ${className}`}>
+    <main className={`px-4 ${centered ? "flex-0" : "flex-1"} ${className}`}>
       {children}
     </main>
   );

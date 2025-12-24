@@ -8,7 +8,11 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    remotePatterns: [{ hostname: "i.ibb.co" }],
+    remotePatterns: [
+      { hostname: "i.ibb.co" },
+      { hostname: "i.pravatar.cc" },
+      { hostname: "images.unsplash.com" },
+    ],
   },
 };
 
