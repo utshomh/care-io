@@ -29,6 +29,8 @@ export default function AuthError() {
 
   const errorMessages: Record<string, string> = {
     CredentialsSignin: "Invalid email or password. Please try again.",
+    UnauthorizedAccess: "You do not have permission to access this page.",
+    AuthenticationRequired: "Please sign in to access this page.",
     Default: "An unexpected error occurred.",
   };
 

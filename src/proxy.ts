@@ -24,11 +24,15 @@ export async function proxy(req: NextRequest) {
 
   if (requiredRoleForPath) {
     if (!session) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(
+        new URL(`/login?error=AuthenticationRequired`, req.url)
+      );
     }
 
     if (session.user.role !== requiredRoleForPath.role) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(
+        new URL(`/login?error=UnauthorizedAccess`, req.url)
+      );
     }
   }
 }
