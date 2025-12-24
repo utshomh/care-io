@@ -10,7 +10,7 @@ const features = [
 
 export default function About() {
   return (
-    <section className="bg-base-100">
+    <section id="about" className="bg-base-100">
       <div className="flex flex-col lg:flex-row items-center gap-4">
         <div className="lg:w-1/2">
           <Image

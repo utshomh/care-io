@@ -12,7 +12,7 @@ import ThemeToggle from "@/components/theme/ThemToggle";
 const links = (
   <>
     <li>
-      <NavLink href="/services">
+      <NavLink href="/#services">
         <HeartHandshake className="h-4 w-4" />
         Services
       </NavLink>
@@ -24,7 +24,7 @@ const links = (
       </NavLink>
     </li>
     <li>
-      <NavLink href="/how-it-works">
+      <NavLink href="/#about">
         <HelpCircle className="h-4 w-4" />
         How it works
       </NavLink>

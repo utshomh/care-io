@@ -3,7 +3,7 @@
 import bcrypt from "bcryptjs";
 
 import prisma from "@/lib/prisma";
-import { User } from "@prisma/client";
+import { Service, User } from "@prisma/client";
 import uploadImage from "@/lib/utils/uploadImage";
 import { RegisterInput } from "@/components/auth/RegisterForm";
 
@@ -30,4 +30,14 @@ export async function createUser({
   });
 
   return JSON.parse(JSON.stringify(user));
+}
+
+export async function getServices(): Promise<Array<Service>> {
+  const services = await prisma.service.findMany({});
+  return services;
+}
+
+export async function getServiceById(id: string): Promise<Service | null> {
+  const service = await prisma.service.findFirst({ where: { id } });
+  return service;
 }

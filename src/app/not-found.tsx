@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FileQuestion, MoveLeft } from "lucide-react";
+import { FileQuestion, ArrowLeft } from "lucide-react";
 import Page from "@/components/layout/Page";
 
 export default function NotFound() {
@@ -33,9 +33,9 @@ export default function NotFound() {
           </Link>
           <button
             onClick={() => router.back()}
-            className="btn btn-primary btn-outline"
+            className="btn btn-primary btn-outline gap-2"
           >
-            <MoveLeft className="w-4 h-4" />
+            <ArrowLeft className="w-5 h-5" />
             Go Back
           </button>
         </div>
