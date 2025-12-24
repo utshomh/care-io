@@ -1,21 +1,35 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-const authorizedPaths = ["/dashboard"];
+import { authOptions } from "@/lib/auth";
+import { Role } from "@prisma/client";
+
+interface AuthorizedPath {
+  pathname: string;
+  role: Role;
+}
+
+const authorizedPaths: AuthorizedPath[] = [
+  { pathname: "/dashboard", role: "ADMIN" },
+];
 
 export async function proxy(req: NextRequest) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   const { pathname } = req.nextUrl;
 
-  const isAuthorizedPath = authorizedPaths.some((path) =>
-    pathname.startsWith(path)
+  const requiredRoleForPath = authorizedPaths.find((path) =>
+    pathname.startsWith(path.pathname)
   );
 
-  if (isAuthorizedPath && !session) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  if (requiredRoleForPath) {
+    if (!session) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+
+    if (session.user.role !== requiredRoleForPath.role) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 }
 
