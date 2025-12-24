@@ -1,9 +1,22 @@
 import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function proxy(req: Request) {
+const authorizedPaths = ["/dashboard"];
+
+export async function proxy(req: NextRequest) {
   const session = await getServerSession();
 
-  console.log(`session: ${JSON.stringify(session)}`);
+  const { pathname } = req.nextUrl;
+
+  const isAuthorizedPath = authorizedPaths.some((path) =>
+    pathname.startsWith(path)
+  );
+
+  if (isAuthorizedPath && !session) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
 }
 
 export const config = {

@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-
 import { createUser } from "@/lib/actions";
 import FormField from "@/components/shared/FormField";
 
@@ -10,6 +9,8 @@ export interface RegisterInput {
   name: string;
   email: string;
   password: string;
+  contact: string;
+  nid: string;
   image: FileList;
 }
 
@@ -21,13 +22,7 @@ export default function RegisterForm() {
   } = useForm<RegisterInput>();
 
   const onSubmit = async (data: RegisterInput) => {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    if (data.image?.[0]) formData.append("image", data.image[0]);
-
-    await createUser(formData);
+    await createUser(data);
 
     const { email, password } = data;
     await signIn("credentials", {
@@ -58,9 +53,23 @@ export default function RegisterForm() {
         placeholder="jane@example.com"
         registration={register("email", {
           required: "Email is required",
-          pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
+          pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email format" },
         })}
         error={errors.email}
+      />
+
+      <FormField
+        label="Contact Number"
+        placeholder="017XXXXXXXX"
+        registration={register("contact", { required: "Contact is required" })}
+        error={errors.contact}
+      />
+
+      <FormField
+        label="NID Number"
+        placeholder="1234567890"
+        registration={register("nid", { required: "NID is required" })}
+        error={errors.nid}
       />
 
       <FormField
@@ -68,7 +77,13 @@ export default function RegisterForm() {
         type="password"
         registration={register("password", {
           required: "Password is required",
-          minLength: { value: 8, message: "Minimum 8 characters" },
+          minLength: { value: 6, message: "Minimum 6 characters" },
+          validate: {
+            hasUpper: (v) =>
+              /[A-Z]/.test(v) || "Must include an uppercase letter",
+            hasLower: (v) =>
+              /[a-z]/.test(v) || "Must include a lowercase letter",
+          },
         })}
         error={errors.password}
       />
@@ -86,11 +101,9 @@ export default function RegisterForm() {
 
       <button
         disabled={isSubmitting}
-        className={`btn btn-primary w-full ${
-          isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
-        }`}
+        className={`btn btn-primary w-full ${isSubmitting ? "loading" : ""}`}
       >
-        {isSubmitting ? "Registering" : " Register"}
+        {isSubmitting ? "Registering..." : "Register"}
       </button>
     </form>
   );

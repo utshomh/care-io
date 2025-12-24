@@ -11,11 +11,11 @@
 
 ### Authentication
 
-- ❌ Email & Password login
+- ✅ Email & Password login
 - ❌ Google social login
-- ❌ Registration form with validation
-- ❌ Persist login on reload
-- ❌ Private route protection
+- ✅ Registration form with validation
+- ✅ Persist login on reload
+- ✅ Private route protection
 
 ### Homepage
 
