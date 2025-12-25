@@ -18,7 +18,7 @@ export default function About() {
             height={720}
             src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80"
             alt="About Care.IO"
-            className="rounded-xl"
+            className="bg-base-200 object-cover rounded-xl"
           />
         </div>
         <div className="lg:w-1/2 space-y-4">

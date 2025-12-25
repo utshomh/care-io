@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { Menu, HeartHandshake, Users, HelpCircle, Phone } from "lucide-react";
+import { Menu, HeartHandshake, HelpCircle, Phone } from "lucide-react";
 
 import Logo from "@/components/shared/Logo";
 import NavLink from "@/components/shared/NavLink";
@@ -12,21 +12,15 @@ import ThemeToggle from "@/components/theme/ThemToggle";
 const links = (
   <>
     <li>
-      <NavLink href="/#services">
+      <NavLink href="/services">
         <HeartHandshake className="h-4 w-4" />
         Services
       </NavLink>
     </li>
     <li>
-      <NavLink href="/caretakers">
-        <Users className="h-4 w-4" />
-        Caretakers
-      </NavLink>
-    </li>
-    <li>
-      <NavLink href="/#about">
+      <NavLink href="/about">
         <HelpCircle className="h-4 w-4" />
-        How it works
+        About Us
       </NavLink>
     </li>
     <li>

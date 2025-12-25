@@ -7,13 +7,13 @@ export default async function Services() {
   const services = await getServices();
 
   return (
-    <section id="services" className="py-12 bg-base-200 rounded-xl">
-      <div className="px-4 space-y-6">
+    <section id="services" className="py-12 px-6 bg-base-200 rounded-xl">
+      <div className="space-y-6">
         <div className="text-center space-y-3">
           <h2 className="text-4xl font-bold text-base-content">
             Our Specialized Services
           </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
+          <p className="text-base-content/75 max-w-2xl mx-auto">
             Providing professional and compassionate care tailored to your
             family&apos;s unique needs.
           </p>
@@ -23,7 +23,7 @@ export default async function Services() {
           {services.map((s) => (
             <div
               key={s.id}
-              className="group card bg-base-100 shadow-xl border border-base-200 hover:shadow-2xl transition-all duration-300"
+              className="group card bg-base-100 border border-base-200 transition-all duration-300"
             >
               {/* Image Section */}
               <figure className="relative h-56 overflow-hidden">
