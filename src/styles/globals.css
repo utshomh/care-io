@@ -127,3 +127,15 @@
     will-change: transform, opacity;
   }
 }
+
+/* Sync SweetAlert2 with DaisyUI Variables */
+div:where(.swal2-container) {
+  --swal2-background: var(--color-base-100);
+  --swal2-color: var(--color-base-content);
+}
+
+/* Ensure the success/error icons look right in dark mode */
+.swal2-popup {
+  background-color: var(--color-base-100) !important;
+  color: var(--color-base-content) !important;
+}

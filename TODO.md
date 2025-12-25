@@ -39,7 +39,6 @@
 - ❌ Location selection (Division → Area)
 - ❌ Dynamic cost calculation
 - ❌ Save booking with status = Pending
-- ❌ Use ZapShift resource data
 
 ### My Bookings
 

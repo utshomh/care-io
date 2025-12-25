@@ -44,10 +44,8 @@ model Booking {
   totalCost Float
   status    BookingStatus @default(PENDING)
 
-  division String
+  region   String
   district String
-  city     String
-  area     String
   address  String
 
   createdAt DateTime @default(now())

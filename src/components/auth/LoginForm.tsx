@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 
+import alert from "@/lib/alert";
 import FormField from "@/components/shared/FormField";
 
 export interface LoginInput {
@@ -18,13 +19,23 @@ export default function LoginForm() {
   } = useForm<LoginInput>();
 
   const onSubmit = async (data: LoginInput) => {
-    const { email, password } = data;
-    await signIn("credentials", {
-      email,
-      password,
-      redirect: true,
-      callbackUrl: "/dashboard",
-    });
+    try {
+      const { email, password } = data;
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: true,
+        callbackUrl: "/dashboard",
+      });
+      alert.success("Logged in!", "You have successfully Logged in.");
+    } catch (err) {
+      alert.error(
+        "Login Failed!",
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -58,10 +69,10 @@ export default function LoginForm() {
       <button
         disabled={isSubmitting}
         className={`btn btn-primary w-full ${
-          isSubmitting ? "cursor-not-allowed" : "cursor-pointer"
+          isSubmitting ? "loading loading-bars" : ""
         }`}
       >
-        {isSubmitting ? "Logging in" : "Login"}
+        {isSubmitting ? "Logging in..." : "Login"}
       </button>
     </form>
   );

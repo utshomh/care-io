@@ -31,11 +31,11 @@ export default async function ServicesPage() {
         </header>
 
         {/* Services Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => (
             <div
               key={s.id}
-              className="group card bg-base-100 border border-base-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group card bg-base-100 border border-base-200 transition-all duration-300 overflow-hidden"
             >
               {/* Image Section */}
               <figure className="relative h-64 w-full">

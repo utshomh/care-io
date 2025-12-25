@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+
+import alert from "@/lib/alert";
 import { createUser } from "@/lib/actions";
 import FormField from "@/components/shared/FormField";
 
@@ -22,15 +24,24 @@ export default function RegisterForm() {
   } = useForm<RegisterInput>();
 
   const onSubmit = async (data: RegisterInput) => {
-    await createUser(data);
-
-    const { email, password } = data;
-    await signIn("credentials", {
-      email,
-      password,
-      redirect: true,
-      callbackUrl: "/dashboard",
-    });
+    try {
+      await createUser(data);
+      const { email, password } = data;
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: true,
+        callbackUrl: "/dashboard",
+      });
+      alert.success("Registered!", "You have successfully Registered.");
+    } catch (err) {
+      alert.error(
+        "Registration Failed!",
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again."
+      );
+    }
   };
 
   return (
@@ -101,7 +112,9 @@ export default function RegisterForm() {
 
       <button
         disabled={isSubmitting}
-        className={`btn btn-primary w-full ${isSubmitting ? "loading" : ""}`}
+        className={`btn btn-primary w-full ${
+          isSubmitting ? "loading loading-bars" : ""
+        }`}
       >
         {isSubmitting ? "Registering..." : "Register"}
       </button>

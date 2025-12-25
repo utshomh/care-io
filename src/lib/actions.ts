@@ -3,9 +3,10 @@
 import bcrypt from "bcryptjs";
 
 import prisma from "@/lib/prisma";
-import { Service, User } from "@prisma/client";
+import { Booking, Service, ServiceUnit, User } from "@prisma/client";
 import uploadImage from "@/lib/utils/uploadImage";
 import { RegisterInput } from "@/components/auth/RegisterForm";
+import { BookingInput } from "@/components/booking/BookingForm";
 
 export async function createUser({
   name,
@@ -30,6 +31,36 @@ export async function createUser({
   });
 
   return JSON.parse(JSON.stringify(user));
+}
+
+export async function createBooking({
+  duration,
+  region,
+  district,
+  address,
+  unitUsed,
+  totalCost,
+  serviceId,
+  userId,
+}: BookingInput & {
+  unitUsed: ServiceUnit;
+  totalCost: number;
+  userId: string;
+  serviceId: string;
+}): Promise<Booking> {
+  const booking = await prisma.booking.create({
+    data: {
+      duration,
+      region,
+      district,
+      address,
+      unitUsed,
+      totalCost,
+      userId,
+      serviceId,
+    },
+  });
+  return booking;
 }
 
 export async function getServices(): Promise<Array<Service>> {
