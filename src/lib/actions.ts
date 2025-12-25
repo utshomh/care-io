@@ -1,12 +1,14 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
+import { Booking, Service, ServiceUnit, User } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
-import { Booking, Service, ServiceUnit, User } from "@prisma/client";
 import uploadImage from "@/lib/utils/uploadImage";
 import { RegisterInput } from "@/components/auth/RegisterForm";
 import { BookingInput } from "@/components/booking/BookingForm";
+import { authOptions } from "@/lib/auth";
 
 export async function createUser({
   name,
@@ -71,4 +73,15 @@ export async function getServices(): Promise<Array<Service>> {
 export async function getServiceById(id: string): Promise<Service | null> {
   const service = await prisma.service.findFirst({ where: { id } });
   return service;
+}
+
+export async function getBookingsByCurrentUser(): Promise<
+  Array<Booking & { service: Service }>
+> {
+  const session = await getServerSession(authOptions);
+  const bookings = await prisma.booking.findMany({
+    where: { userId: session!.user.id },
+    include: { service: {} },
+  });
+  return bookings;
 }

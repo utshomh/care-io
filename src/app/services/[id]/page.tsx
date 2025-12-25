@@ -123,7 +123,7 @@ export default async function ServicePage({
 
             {/* Requirement: Book Service button navigates to Booking Page */}
             <Link
-              href={`/booking/${service.id}`}
+              href={`/book/${service.id}`}
               className="btn btn-primary btn-lg w-full group"
             >
               Book Service

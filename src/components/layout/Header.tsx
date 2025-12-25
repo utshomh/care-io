@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { Menu, HeartHandshake, HelpCircle, Phone } from "lucide-react";
+import { Menu, HeartHandshake, HelpCircle, Phone, Power } from "lucide-react";
 
 import Logo from "@/components/shared/Logo";
 import NavLink from "@/components/shared/NavLink";
@@ -74,7 +74,7 @@ export default function Header() {
                 <Image
                   width={40}
                   height={40}
-                  src={data.user!.image!}
+                  src={data.user.image!}
                   alt="user avatar"
                 />
               </div>
@@ -84,6 +84,9 @@ export default function Header() {
               className="dropdown-content menu bg-base-200 rounded-xl z-1 w-52 gap-2"
             >
               <li>
+                <Link href="/bookings">My Bookings</Link>
+              </li>
+              <li>
                 <Link href="/dashboard">Dashboard</Link>
               </li>
               <li>
@@ -91,7 +94,7 @@ export default function Header() {
                   className="btn btn-sm btn-secondary"
                   onClick={() => signOut()}
                 >
-                  Logout
+                  <Power className="w-4 h-4" /> Logout
                 </button>
               </li>
             </ul>
