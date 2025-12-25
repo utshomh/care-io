@@ -25,7 +25,7 @@ export default function LoginForm() {
         email,
         password,
         redirect: true,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/profile",
       });
       alert.success("Logged in!", "You have successfully Logged in.");
     } catch (err) {

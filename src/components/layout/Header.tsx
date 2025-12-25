@@ -3,7 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { Menu, HeartHandshake, HelpCircle, Phone, Power } from "lucide-react";
+import {
+  Menu,
+  HeartHandshake,
+  HelpCircle,
+  Phone,
+  Power,
+  User,
+  Bookmark,
+} from "lucide-react";
 
 import Logo from "@/components/shared/Logo";
 import NavLink from "@/components/shared/NavLink";
@@ -33,7 +41,7 @@ const links = (
 );
 
 export default function Header() {
-  const { status, data } = useSession();
+  const { status, data: session } = useSession();
 
   return (
     <div className="navbar backdrop-blur border-b border-base-300 sticky top-0 z-50">
@@ -74,22 +82,33 @@ export default function Header() {
                 <Image
                   width={40}
                   height={40}
-                  src={data.user.image!}
+                  src={session.user.image!}
                   alt="user avatar"
                 />
               </div>
             </div>
             <ul
               tabIndex={-1}
-              className="dropdown-content menu bg-base-200 rounded-xl z-1 w-52 gap-2"
+              className="dropdown-content menu bg-base-200 rounded-xl z-1 w-52 gap-1"
             >
               <li>
-                <Link href="/bookings">My Bookings</Link>
+                <Link href="/profile">
+                  <User className="w-5 h-5" /> My Profile
+                </Link>
               </li>
               <li>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/bookings">
+                  {" "}
+                  <Bookmark className="w-5 h-5" /> My Bookings
+                </Link>
               </li>
-              <li>
+              {session!.user.role === "ADMIN" && (
+                <li>
+                  <Link href="/dashboard">Dashboard</Link>
+                </li>
+              )}
+
+              <li className="mt-2">
                 <button
                   className="btn btn-sm btn-secondary"
                   onClick={() => signOut()}

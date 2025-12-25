@@ -8,7 +8,7 @@ export default function Logo() {
         <HeartHandshake className="h-5 w-5" />
       </div>
       <span className="text-2xl font-semibold tracking-tight">
-        Care<span className="text-primary italic">IO</span>
+        Care<span className="text-primary italic animate-pulse">IO</span>
       </span>
     </Link>
   );

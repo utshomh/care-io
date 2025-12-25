@@ -85,3 +85,18 @@ export async function getBookingsByCurrentUser(): Promise<
   });
   return bookings;
 }
+
+export async function getCurrentUser(): Promise<
+  User & {
+    _count: {
+      bookings: number;
+    };
+  }
+> {
+  const session = await getServerSession(authOptions);
+  const user = await prisma.user.findFirstOrThrow({
+    where: { id: session!.user.id },
+    include: { _count: { select: { bookings: {} } } },
+  });
+  return user;
+}

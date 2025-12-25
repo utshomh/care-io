@@ -6,11 +6,13 @@ import { Role } from "@prisma/client";
 
 interface AuthorizedPath {
   pathname: string;
-  role: Role;
+  role?: Role;
 }
 
 const authorizedPaths: AuthorizedPath[] = [
   { pathname: "/dashboard", role: "ADMIN" },
+  { pathname: "/book", role: "USER" },
+  { pathname: "/profile" },
 ];
 
 export async function proxy(req: NextRequest) {
@@ -29,7 +31,10 @@ export async function proxy(req: NextRequest) {
       );
     }
 
-    if (session.user.role !== requiredRoleForPath.role) {
+    if (
+      requiredRoleForPath.role &&
+      session.user.role !== requiredRoleForPath.role
+    ) {
       return NextResponse.redirect(
         new URL(`/login?error=UnauthorizedAccess`, req.url)
       );
@@ -38,5 +43,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: "/:path",
+  matcher: "/:path*",
 };

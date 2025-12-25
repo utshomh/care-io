@@ -31,7 +31,7 @@ export default function RegisterForm() {
         email,
         password,
         redirect: true,
-        callbackUrl: "/dashboard",
+        callbackUrl: "/profile",
       });
       alert.success("Registered!", "You have successfully Registered.");
     } catch (err) {
