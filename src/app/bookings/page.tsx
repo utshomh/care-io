@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { BookingStatus } from "@prisma/client";
-import { ChevronRight } from "lucide-react";
 
 import { getBookingsByCurrentUser } from "@/lib/actions";
 import Page from "@/components/layout/Page";
+import Actions from "@/components/booking/Actions";
 
 export const metadata = {
   title: "My Bookings | ServicePort",
@@ -108,9 +108,7 @@ export default async function MyBookingsPage() {
                     </div>
                   </td>
                   <td className="text-center">
-                    <button className="btn btn-circle btn-ghost btn-sm">
-                      <ChevronRight className="w-6 h-6" />
-                    </button>
+                    <Actions booking={booking} />
                   </td>
                 </tr>
               ))}

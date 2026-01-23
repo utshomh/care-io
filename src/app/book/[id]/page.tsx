@@ -21,7 +21,7 @@ export async function generateMetadata({
 export default async function BookingPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const service = await getServiceById(id);

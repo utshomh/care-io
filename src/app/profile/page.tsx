@@ -52,7 +52,10 @@ export default async function ProfilePage() {
                 year: "numeric",
               })}
             </p>
-            <div className="pt-2">
+            <div className="space-y-2">
+              <div className="stat-desc font-medium text-success">
+                Active member
+              </div>
               <button className="btn btn-sm btn-outline gap-2">
                 <Settings className="w-4 h-4" />
                 Edit Profile
@@ -70,9 +73,6 @@ export default async function ProfilePage() {
               </div>
               <div className="stat-value text-primary">
                 {user._count.bookings}
-              </div>
-              <div className="stat-desc font-medium text-success">
-                Active member
               </div>
             </div>
           </div>

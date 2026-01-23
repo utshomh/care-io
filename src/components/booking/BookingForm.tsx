@@ -3,13 +3,14 @@
 import { useForm, useWatch } from "react-hook-form";
 import { CircleDollarSign } from "lucide-react";
 import { Service } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import alert from "@/lib/alert";
 import { coverageArea } from "@/data/area";
 import { createBooking } from "@/lib/actions";
 import FormField from "@/components/shared/FormField";
 import Select from "@/components/shared/Select";
-import { useSession } from "next-auth/react";
 
 export interface BookingInput {
   duration: number;
@@ -19,8 +20,8 @@ export interface BookingInput {
 }
 
 export default function BookingForm({ service }: { service: Service }) {
+  const router = useRouter();
   const session = useSession();
-
   const {
     register,
     control,
@@ -54,17 +55,18 @@ export default function BookingForm({ service }: { service: Service }) {
           });
           alert.success(
             "Booked!",
-            `Successfully booked '${service.title}' for ${data.duration} ${serviceUnit}s.`
+            `Successfully booked '${service.title}' for ${data.duration} ${serviceUnit}s.`,
           );
           reset();
-        }
+          router.push("/bookings");
+        },
       );
     } catch (err) {
       alert.error(
         "Booking Failed!",
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again."
+          : "Something went wrong. Please try again.",
       );
     }
   };

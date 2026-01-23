@@ -2,6 +2,12 @@
   "name": "care-io",
   "version": "0.1.0",
   "private": true,
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/engines",
+      "prisma"
+    ]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
@@ -20,6 +26,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.69.0",
+    "stripe": "^20.2.0",
     "sweetalert2": "^11.26.17"
   },
   "devDependencies": {

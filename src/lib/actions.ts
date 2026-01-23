@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { Booking, Service, ServiceUnit, User } from "@prisma/client";
 
 import prisma from "@/lib/prisma";
+import stripe from "@/lib/stripe";
 import uploadImage from "@/lib/utils/uploadImage";
 import { RegisterInput } from "@/components/auth/RegisterForm";
 import { BookingInput } from "@/components/booking/BookingForm";
@@ -62,7 +63,44 @@ export async function createBooking({
       serviceId,
     },
   });
-  return booking;
+  const service = await prisma.service.findFirstOrThrow({
+    where: { id: booking.serviceId },
+  });
+  const customer = await prisma.user.findFirstOrThrow({
+    where: { id: booking.userId },
+  });
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          unit_amount: service.priceRate,
+          product_data: {
+            name: service.title,
+            images: [service.image],
+            description: `Ordered from CareIO`,
+          },
+        },
+        quantity: booking.totalCost / service.priceRate,
+      },
+    ],
+    mode: "payment",
+    metadata: {
+      bookingId: booking.id,
+    },
+    customer_email: customer.email,
+    success_url: `${process.env.APP_URL!}/api/payment?session={CHECKOUT_SESSION_ID}&booking=${booking.id}`,
+    cancel_url: `${process.env.APP_URL!}/bookings`,
+    payment_intent_data: {
+      description: "Order from CareIO",
+    },
+  });
+  const updatedBooking = await prisma.booking.update({
+    where: { id: booking.id },
+    data: { paymentUrl: session.url },
+  });
+  return updatedBooking;
 }
 
 export async function getServices(): Promise<Array<Service>> {
@@ -84,6 +122,10 @@ export async function getBookingsByCurrentUser(): Promise<
     include: { service: {} },
   });
   return bookings;
+}
+
+export async function deleteBooking(id: string): Promise<void> {
+  await prisma.booking.delete({ where: { id } });
 }
 
 export async function getCurrentUser(): Promise<
